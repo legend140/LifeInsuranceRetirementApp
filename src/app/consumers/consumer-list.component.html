@@ -26,9 +26,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let consumer of filteredConsumers">
-                        <td>{{consumer.Name}}</td>
-                        <td>{{consumer.BasicSalary | number:'1.0':'en-US'}}</td>
-                        <td>{{consumer.BirthDate | date: 'MMM dd, yyyy'}}</td>
+                        <td>{{consumer.name}}</td>
+                        <td>{{consumer.basicSalary | number:'1.0':'en-US'}}</td>
+                        <td>{{consumer.birthDate | date: 'MMM dd, yyyy'}}</td>
                         <td></td>
                     </tr>
                 </tbody>

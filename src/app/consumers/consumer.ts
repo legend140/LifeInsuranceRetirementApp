@@ -1,6 +1,6 @@
 export interface IConsumer {
-    Id: number;
-    Name: string;
-    BasicSalary: number;
-    BirthDate: Date;
+    id: number;
+    name: string;
+    basicSalary: number;
+    birthDate: Date;
 }

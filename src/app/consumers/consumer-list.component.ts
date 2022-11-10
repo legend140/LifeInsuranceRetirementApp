@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IConsumer } from './consumer';
 import { ConsumerService } from './consumer.service';
 
@@ -7,9 +8,11 @@ import { ConsumerService } from './consumer.service';
   templateUrl: './consumer-list.component.html',
   styleUrls: ['./consumer-list.component.less']
 })
-export class ConsumerListComponent implements OnInit {
+export class ConsumerListComponent implements OnInit, OnDestroy {
 
   pageTitle: string = "Consumer List";
+  errorMessage: string = '';
+  sub: Subscription | undefined;
 
   private _listFilter: string = '';
   get listFilter(): string {
@@ -26,13 +29,22 @@ export class ConsumerListComponent implements OnInit {
   constructor(private consumerService: ConsumerService) { }
 
   ngOnInit(): void {
-    this.consumers = this.consumerService.getConsumers();
-    this.filteredConsumers = this.consumers;
+    this.consumerService.getConsumers().subscribe({
+      next: consumers => {
+        this.consumers = consumers;
+        this.filteredConsumers = this.consumers;
+      },
+      error: err => this.errorMessage = err
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
   performFilter(): IConsumer[] {
     return this.consumers.filter((consumer: IConsumer) =>
-          consumer.Name.toLocaleLowerCase().includes(this.listFilter.toLocaleLowerCase()));
+          consumer.name.toLocaleLowerCase().includes(this.listFilter.toLocaleLowerCase()));
   }
 
 }
