@@ -14,25 +14,36 @@
                 <h4>Filtered by: {{listFilter}}</h4>
             </div>
         </div>
-        <div class="table-response">
-            <table class="table" *ngIf="consumers.length">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Basic Salary</th>
-                        <th>Birth Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let consumer of filteredConsumers">
-                        <td>{{consumer.name}}</td>
-                        <td>{{consumer.basicSalary | number:'1.0':'en-US'}}</td>
-                        <td>{{consumer.birthDate | date: 'MMM dd, yyyy'}}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="table-response">
+                <table class="table" *ngIf="consumers.length">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Basic Salary</th>
+                            <th>Birth Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let consumer of filteredConsumers">
+                            <td>{{consumer.name}}</td>
+                            <td>{{consumer.basicSalary | number:'1.0':'en-US'}}</td>
+                            <td>{{consumer.birthDate | date: 'MMM dd, yyyy'}}</td>
+                            <td>
+                                <a class="btn btn-success edit" [routerLink]="['/Consumers', consumer.id]">
+                                    <fa-icon [icon]="faEdit"></fa-icon>
+                                </a>
+                                <a class="btn btn-danger delete" (click)="deleteConsumer(consumer)">
+                                    <fa-icon [icon]="faTrash"></fa-icon>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-primary" [routerLink]="['/Consumers/New']">Add New</a>
+                <div class="alert alert-info message promptMessage" *ngIf="promptMessage">{{promptMessage}}</div>
+            </div>
         </div>
     </div>
 </div>

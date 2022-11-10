@@ -1,22 +1,33 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ConsumerListComponent } from './consumers/consumer-list.component';
-import { SetupComponent } from './setup/setup.component';
+import { WelcomeComponent } from './home/welcome.component';
+import { RouterModule } from '@angular/router';
+import { NotFoundComponent } from './not-found//not-found.component';
+import { ConsumerModule } from './consumers/consumer.module';
+import { SetupModule } from './setup/setup.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SetupComponent,
-    ConsumerListComponent
+    WelcomeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: 'Welcome', component: WelcomeComponent },
+      { path: 'Not-Found', component: NotFoundComponent },
+      { path: '', redirectTo: 'Welcome', pathMatch: 'full' },
+      { path: '**', redirectTo: 'Not-Found', pathMatch: 'full' }
+    ]),
+    ConsumerModule,
+    SetupModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

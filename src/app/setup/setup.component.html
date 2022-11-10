@@ -1,1 +1,43 @@
-<p>setup works!</p>
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body" *ngIf="setup">
+        <div class="row">
+            <form method="post">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="guaranteedIssue">Guaranteed Issue</label>
+                        <input type="number" id="guaranteedIssue" [(ngModel)]="setup.guaranteedIssue" name="guaranteedIssue" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="maxAgeLimit">Max Age Limit</label>
+                        <input type="number" id="maxAgeLimit" [(ngModel)]="setup.maxAgeLimit" name="maxAgeLimit" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="minAgeLimit">Min Age Limit</label>
+                        <input type="number" id="minAgeLimit" [(ngModel)]="setup.minAgeLimit" name="minAgeLimit" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="minRange">Min Range</label>
+                        <input type="number" id="minRange" [(ngModel)]="setup.minRange" name="minRange" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="maxRange">Max Range</label>
+                        <input type="number" id="maxRange" [(ngModel)]="setup.maxRange" name="maxRange" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="increments">Increments</label>
+                        <input type="number" id="increments" [(ngModel)]="setup.increments" name="increments" class="form-control" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-outline-secondary" (click)="saveSetup()">
+            Save
+        </button>
+        <div class="alert alert-info message promptMessage" *ngIf="promptMessage">{{promptMessage}}</div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IConsumer } from './consumer';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,30 @@ export class ConsumerService {
 
   getConsumers(): Observable<IConsumer[]> {
     return this.http.get<IConsumer[]>(this.endpoint).pipe(
-      tap(data => console.log('All:', JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+  getConsumer(id: number): Observable<IConsumer | undefined> {
+    return this.http.get<IConsumer>(this.endpoint+'/'+id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateConsumer(id: number, consumer: IConsumer): Observable<IConsumer | undefined> {
+    return this.http.put<IConsumer>(this.endpoint+'/'+id, consumer).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addConsumer(consumer: IConsumer): Observable<IConsumer> {
+    return this.http.post<IConsumer>(this.endpoint, consumer).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteConsumer(id: number): Observable<IConsumer | undefined> {
+    return this.http.delete<IConsumer>(this.endpoint+'/'+id).pipe(
       catchError(this.handleError)
     );
   }
