@@ -1,0 +1,44 @@
+<div class="card mt-3">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body" *ngIf="consumerHistory">
+        <div class="row">
+            <table class="table benefits mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Log Type</th>
+                        <th>Consumer Name</th>
+                        <th>Basic Salary</th>
+                        <th>Birth Date</th>
+                        <th>Logged By</th>
+                        <th>Logged On</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let consumer of consumerHistory">
+                        <td>{{consumer.id}}</td>
+                        <td>{{logTypes[consumer.logType - 1]}}</td>
+                        <td>{{consumer.name}}</td>
+                        <td>{{consumer.basicSalary | number:'1.0':'en-US'}}</td>
+                        <td>{{consumer.birthDate | date: 'MMM dd, yyyy'}}</td>
+                        <td>{{consumer.loggedBy}}</td>
+                        <td>{{consumer.loggedDT | date: 'yyyy-MM-dd h:mm a'}}</td>
+                        <td>
+                            <button *ngIf="consumer.benefit != benefit" class="btn btn-primary" type="button" (click)="viewBenefitHistory(consumer.benefit)" title="View Benefit Detail">
+                                <fa-icon [icon]="faEye"></fa-icon>
+                            </button>
+                            <button *ngIf="consumer.benefit == benefit" class="btn btn-primary" type="button" (click)="viewBenefitHistory(undefined)" title="Close">
+                                <fa-icon [icon]="faEyeSlash"></fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <app-benefit-detail *ngIf="benefit" [benefit]="benefit"></app-benefit-detail>
+        </div>
+    </div>
+</div>

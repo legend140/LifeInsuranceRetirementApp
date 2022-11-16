@@ -1,8 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ISetup } from './setup';
 
+@UntilDestroy()
 @Injectable({
   providedIn: 'root'
 })
@@ -14,12 +16,21 @@ export class SetupService {
 
   getSetup(): Observable<ISetup> {
     return this.http.get<ISetup>(this.endpoint).pipe(
+      untilDestroyed(this),
       catchError(this.handleError)
     );
   }
 
-  saveSetup(setup: ISetup): Observable<ISetup> {
+  updateSetup(id: number, setup: ISetup): Observable<ISetup | undefined> {
+    return this.http.put<ISetup>(this.endpoint+'/'+id, setup).pipe(
+      untilDestroyed(this),
+      catchError(this.handleError)
+    );
+  }
+
+  addSetup(setup: ISetup): Observable<ISetup> {
     return this.http.post<ISetup>(this.endpoint, setup).pipe(
+      untilDestroyed(this),
       catchError(this.handleError)
     );
   }

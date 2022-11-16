@@ -6,4 +6,5 @@ export interface ISetup {
     minRange: number;
     maxRange: number;
     increments: number;
+    updatedDT?: Date;
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IConsumer } from './consumer';
+import { IConsumer, IConsumerHistory } from './consumer';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ConsumerService } from './consumer.service';
+import { IBenefit } from '../benefits/benefit';
 
 @Component({
   templateUrl: './consumer-detail.component.html',
@@ -12,9 +13,11 @@ export class ConsumerDetailComponent implements OnInit {
 
   pageTitle: string = "Consumer Detail";
   consumer: IConsumer | undefined;
+  consumerHistory: IConsumerHistory[] | undefined;
   faChevronLeft = faChevronLeft;
   errorMessage: string = '';
   promptMessage: string = '';
+  selectedBenefit: IBenefit | undefined;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -24,13 +27,13 @@ export class ConsumerDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.getConsumer(id);
+      this.getConsumerLogs(id);
     } else {
       this.consumer = {
         id: 0,
         name: '',
         basicSalary: 0,
-        birthDate: new Date(),
-        benefits: undefined
+        birthDate: new Date()
       };
     }
   }
@@ -44,11 +47,20 @@ export class ConsumerDetailComponent implements OnInit {
     });
   }
 
+  getConsumerLogs(id: number): void {
+    this.consumerService.getConsumerLogs(id).subscribe({
+      next: consumerHistory => {
+        this.consumerHistory = consumerHistory;
+      },
+      error: err => this.errorMessage = err
+    });
+  }
+
   onBack(): void {
     this.router.navigate(['/Consumers']);
   }
 
-  calculateBenefits(): void {
+  saveConsumer(): void {
     if (this.consumer) {
       if (this.consumer.id > 0) {
         this.consumerService.updateConsumer(this.consumer.id, this.consumer).subscribe({

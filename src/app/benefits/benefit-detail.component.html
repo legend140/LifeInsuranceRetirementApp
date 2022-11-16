@@ -1,0 +1,28 @@
+<div class="card mt-3">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body" *ngIf="benefit">
+        <div class="row">
+            <table class="table benefits mt-3">
+                <thead>
+                    <tr>
+                        <th>Multiple</th>
+                        <th>Benefits Amount Quotation</th>
+                        <th>Pended Amount</th>
+                        <th>Benefits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let details of benefit.benefitDetails">
+                        <td>{{details.multiple}}</td>
+                        <td>{{details.benefitsAmountQuotation | number:'1.0':'en-US'}}</td>
+                        <td>{{details.pendedAmount | number:'1.0':'en-US'}}</td>
+                        <td>{{details.status == BenefitStatus.ForApproval ? 'For Approval' : details.benefitsAmountQuotation | number:'1.0':'en-US' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="ml-2 mt-2">Last Updated: {{benefit.updatedDT | date: 'yyyy-MM-dd h:mm a'}}</span>
+        </div>
+    </div>
+</div>

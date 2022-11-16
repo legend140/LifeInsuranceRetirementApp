@@ -21,36 +21,19 @@
                 </div>
             </form>
         </div>
-        <div class="row mt-5">
-            <div class="container">
-                <table class="table benefits">
-                    <thead>
-                        <tr>
-                            <th>Multiple</th>
-                            <th>Benefits Amount Quotation</th>
-                            <th>Pended Amount</th>
-                            <th>Benefits</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let benefits of consumer.benefits">
-                            <td>{{benefits.multiple}}</td>
-                            <td>{{benefits.benefitsAmountQuotation | number:'1.0':'en-US'}}</td>
-                            <td>{{benefits.pendedAmount | number:'1.0':'en-US'}}</td>
-                            <td>{{benefits.status}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="row" *ngIf="consumer.benefit">
+            <app-benefit-detail [benefit]="consumer.benefit"></app-benefit-detail>
         </div>
     </div>
     <div class="card-footer">
         <button class="btn btn-outline-secondary backBtn" (click)="onBack()">
             <fa-icon [icon]="faChevronLeft"></fa-icon> Back
         </button>
-        <button type="submit" class="btn btn-outline-secondary" (click)="calculateBenefits()">
-            Calculate
+        <button type="submit" class="btn btn-outline-secondary" (click)="saveConsumer()">
+            {{(consumer?.id??0) > 0 ? 'Update' : 'Add'}}
         </button>
         <div class="alert alert-info message promptMessage" *ngIf="promptMessage">{{promptMessage}}</div>
     </div>
 </div>
+
+<app-benefit-history [consumerHistory]="consumerHistory"></app-benefit-history>

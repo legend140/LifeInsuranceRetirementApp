@@ -9,6 +9,7 @@ import { NotFoundComponent } from './not-found//not-found.component';
 import { ConsumerModule } from './consumers/consumer.module';
 import { SetupModule } from './setup/setup.module';
 import { SharedModule } from './shared/shared.module';
+import { BenefitHistoryComponent } from './benefits/benefit-history.component';
 
 @NgModule({
   declarations: [

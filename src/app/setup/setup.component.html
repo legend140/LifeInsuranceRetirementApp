@@ -32,6 +32,7 @@
                     </div>
                 </div>
             </form>
+            <span *ngIf="setup.updatedDT" class="mt-2">Last Updated: {{setup.updatedDT | date: 'yyyy-MM-dd h:mm a'}}</span>
         </div>
     </div>
     <div class="card-footer">

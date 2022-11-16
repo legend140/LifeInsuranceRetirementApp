@@ -16,6 +16,15 @@ export class SetupComponent implements OnInit {
   constructor(private setupService: SetupService) { }
 
   ngOnInit(): void {
+    this.setup = {
+      id: 0,
+      guaranteedIssue: 0,
+      maxAgeLimit: 0,
+      minAgeLimit: 0,
+      minRange: 0,
+      maxRange: 0,
+      increments: 0
+  }
     this.getSetup();
   }
 
@@ -30,13 +39,23 @@ export class SetupComponent implements OnInit {
 
   saveSetup(): void {
     if (this.setup) {
-      this.setupService.saveSetup(this.setup).subscribe({
-        next: savedSetup => {
-          this.setup = savedSetup;
-          this.promptMessage = "Save success!";
-        },
-        error: err => this.errorMessage = err
-      });
+      if (this.setup.id > 0) {
+        this.setupService.updateSetup(this.setup.id, this.setup).subscribe({
+          next: savedSetup => {
+            this.setup = savedSetup;
+            this.promptMessage = "Save success!";
+          },
+          error: err => this.errorMessage = err
+        });
+      } else {
+        this.setupService.addSetup(this.setup).subscribe({
+          next: savedSetup => {
+            this.setup = savedSetup;
+            this.promptMessage = "Save success!";
+          },
+          error: err => this.errorMessage = err
+        });
+      }
     }
   }
 }
